@@ -1,8 +1,8 @@
-# Default Prediction Project
+# Deep Learning for Default Prediction — Course End Project
 
-**Submission Date:** May 2025  
 **Author:** Carllos Watts-Nogueira  
-**Course:** Artificial Intelligence & Machine Learning  
+**Date:** July 12, 2025  
+**Course:** Deep Learning with TensorFlow and Keras  
 **Institution:** University of San Diego / Fullstack Academy  
 **Section:** 2504-FTB-CT-AIM-PT  
 

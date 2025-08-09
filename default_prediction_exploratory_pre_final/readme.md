@@ -1,80 +1,85 @@
 # Deep Learning for Default Prediction — Course End Project
 
-This project explores multiple strategies for predicting customer default using deep learning and ensemble methods. It was developed as part of the "Deep Learning with TensorFlow and Keras" course and includes five distinct modeling approaches, each designed to address challenges such as class imbalance, feature dimensionality, and generalization.
+**Author:** Carllos Watts-Nogueira  
+**Date:** July 12, 2025  
+**Notebook:** `default_prediction_exploratory_pre_final_models.ipynb`  
+**Course:** Deep Learning with TensorFlow and Keras  
+**Institution:** University of San Diego / Fullstack Academy  
 
-Author: Carllos Watts-Nogueira  
-Date: July 12  
-Notebook: `default_prediction_exploratory_pre_final_models.ipynb`
+---
 
-## Project Objective
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)  
+![License](https://img.shields.io/badge/License-MIT-green.svg)  
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen.svg)  
+![Best Model](https://img.shields.io/badge/Best%20Model-LightGBM%20(AUC%3D0.992)-success.svg)  
+![Class Imbalance](https://img.shields.io/badge/Class%20Imbalance-SMOTE%20%26%20Weights-orange.svg)  
+![Dimensionality](https://img.shields.io/badge/Dimensionality-PCA%20(150)-yellow.svg)  
+![Evaluation](https://img.shields.io/badge/Evaluation-AUC%2C%20F1%2C%20Recall%2C%20Precision-lightgrey.svg)
 
-To build and evaluate models that predict whether a customer will default on a loan, using a dataset with financial and demographic features. The project focuses on:
+---
 
-- Handling missing data  
-- Addressing class imbalance  
+##  Project Objective
+
+To build and evaluate models that predict customer loan default using financial and demographic data. The project addresses:
+
+- Missing data handling  
+- Class imbalance mitigation  
 - Feature encoding and scaling  
-- Building neural networks and LightGBM models  
-- Evaluating performance across multiple thresholds  
-- Comparing undersampling, SMOTE, and class weighting strategies  
+- Deep learning and ensemble modeling  
+- Threshold tuning and performance comparison  
 
-## Modeling Overview
+---
 
-| Model ID | Strategy                                | Algorithm      | Balancing Method | Threshold | Notes |
-|----------|-----------------------------------------|----------------|------------------|-----------|-------|
-| Model 1  | Undersampling + MLP                     | Neural Network | Undersampling    | 0.5       | Small balanced dataset |
-| Model 2  | Class Weights + MLP                     | Neural Network | Class weights    | 0.5 / 0.3 | Full dataset |
-| Model 3  | PCA + K-Fold + Class Weights            | Neural Network | Class weights    | 0.3       | Dimensionality reduction |
-| Model 4  | SMOTE + LightGBM + Threshold Tuning     | LightGBM       | SMOTE            | Tuned     | Optimized for F1 |
-| Model 5  | SMOTE + MLP                             | Neural Network | SMOTE            | 0.5       | High-performing deep model |
+##  Modeling Strategies
 
+| Model ID | Strategy                            | Algorithm      | Balancing Method | Threshold | Notes                          |
+|----------|-------------------------------------|----------------|------------------|-----------|--------------------------------|
+| M1       | Undersampling + MLP                 | Neural Network | Undersampling    | 0.5       | Small balanced dataset         |
+| M2       | Class Weights + MLP                 | Neural Network | Class weights    | 0.5 / 0.3 | Full dataset                   |
+| M3       | PCA + K-Fold + Class Weights        | Neural Network | Class weights    | 0.3       | Dimensionality reduction       |
+| M4       | SMOTE + LightGBM + Threshold Tuning | LightGBM       | SMOTE            | 0.42      | Optimized for F1-score         |
+| M5       | SMOTE + MLP                         | Neural Network | SMOTE            | 0.5       | High-performing deep model     |
 
-## Step-by-Step Workflow
+---
 
-### 1. Data Loading & Cleaning
+##  Workflow Summary
 
-- Loaded `loan_data.csv` and `Data_Dictionary.csv`.
-- Identified columns with missing values and categorized them by severity.
-- Dropped all rows with missing values, reducing the dataset from 307,511 to 8,602 rows.
-- Removed placeholder values like `'None'` and `'Missing'` from object columns.
-- Dropped duplicate rows and irrelevant ID column (`SK_ID_CURR`).
+### 1. Data Cleaning  
+- Dropped rows with missing values (from 307,511 to 8,602)  
+- Removed placeholders (`'None'`, `'Missing'`)  
+- Dropped duplicates and irrelevant ID column  
 
-### 2. Exploratory Data Analysis (EDA)
+### 2. EDA  
+- Distribution plots for income, credit, annuity  
+- Correlation heatmaps  
+- Categorical analysis (e.g., `OCCUPATION_TYPE`)  
+- Confirmed class imbalance: 6.11% defaults  
 
-- Visualized distributions of key numeric features (`AMT_INCOME_TOTAL`, `AMT_CREDIT`, `AMT_ANNUITY`).
-- Used heatmaps to inspect feature correlations.
-- Analyzed how categorical variables (e.g., `OCCUPATION_TYPE`) relate to default rates.
-- Found that only 6.11% of customers had `TARGET = 1` (default), confirming class imbalance.
+### 3. Balancing Techniques  
+- Undersampling (Model 1)  
+- Class weights (Models 2 & 3)  
+- SMOTE (Models 4 & 5)  
 
-### 3. Class Balancing Strategies
+### 4. Feature Engineering  
+- One-hot encoding  
+- StandardScaler  
+- PCA (Model 3: 150 components)  
 
-- **Model 1**: Used undersampling to balance the dataset (1,052 rows total).
-- **Model 2 & 3**: Used `class_weight='balanced'` during training.
-- **Model 4 & 5**: Applied SMOTE to synthesize minority class examples.
+### 5. Model Architectures  
+**Neural Networks (M1, M2, M3, M5):**  
+- Input → Dense(128) → BatchNorm → Dropout(0.3) → Dense(64) → Dropout(0.3) → Dense(32) → Output(sigmoid)  
+- Optimizer: Adam | Loss: Binary Crossentropy | Metrics: Accuracy, AUC  
+- EarlyStopping applied  
 
-### 4. Feature Engineering
+**LightGBM (M4):**  
+- Tuned hyperparameters  
+- Class weights enabled  
+- Threshold optimized for F1  
+- Feature importance visualized  
 
-- One-hot encoded categorical variables using `pd.get_dummies()`.
-- Scaled features using `StandardScaler`.
-- Applied PCA (Model 3) to reduce dimensionality to 150 components.
+---
 
-### 5. Model Architectures
-
-#### Neural Networks (Models 1, 2, 3, 5)
-
-- Input → Dense(128) → BatchNorm → Dropout(0.3) → Dense(64) → Dropout(0.3) → Dense(32) → Output(sigmoid)
-- Optimizer: Adam  
-- Loss: Binary Crossentropy  
-- Metrics: Accuracy, AUC  
-- EarlyStopping used to prevent overfitting
-
-#### LightGBM (Model 4)
-
-- Tuned hyperparameters: learning rate, depth, leaves, subsample, colsample  
-- Used `class_weight='balanced'`  
-- Threshold optimized for F1-score  
-- Feature importance plotted  
-
-## Model Performance Summary
+##  Model Performance
 
 | Model | Accuracy | Precision | Recall | F1-score | AUC   | Threshold |
 |-------|----------|-----------|--------|----------|-------|-----------|
@@ -85,34 +90,44 @@ To build and evaluate models that predict whether a customer will default on a l
 | M4    | 0.9718   | 0.9954    | 0.9480 | 0.9711   | 0.992 | 0.42      |
 | M5    | 0.97     | 0.99      | 0.94   | 0.96     | 0.981 | 0.5       |
 
-> Note: Model 4 (LightGBM + SMOTE + threshold tuning) achieved the best overall performance, with near-perfect precision and recall.
+> **Model 4** (LightGBM + SMOTE + threshold tuning) achieved the best overall performance.
 
-## Visualizations
+---
 
-- ROC and Precision-Recall curves plotted for Models 4 and 5.
-- PCA explained variance curve plotted to justify component selection.
-- Confusion matrices visualized for all models.
+##  Visualizations
 
-## Lessons Learned
+- ROC and Precision-Recall curves (Models 4 & 5)  
+- PCA explained variance curve  
+- Confusion matrices for all models  
 
-- **Data quality > data quantity**: Dropping rows with excessive nulls improved model reliability.
-- **Balancing matters**: Undersampling, SMOTE, and class weights each affect recall and precision differently.
-- **Threshold tuning is powerful**: Adjusting decision boundaries can dramatically shift model behavior.
-- **Neural networks vs. LightGBM**: LightGBM outperformed deep models on tabular data, but neural nets offer flexibility.
-- **Evaluation beyond accuracy**: Precision, recall, and AUC are more informative in imbalanced classification.
+---
 
-## Production Readiness
+##  Lessons Learned
 
-| Model | Pros | Cons | Suitability |
-|-------|------|------|-------------|
-| M1    | Balanced recall/precision | Small dataset | Prototype |
-| M2    | Full data usage | Low precision | Needs tuning |
-| M3    | Generalization via K-Fold | Low precision | Experimental |
-| M4    | High precision & recall | Complex pipeline | Production-ready |
-| M5    | Strong deep model | Slightly lower AUC than M4 | Production-ready |
+- Data quality is more impactful than quantity  
+- Balancing methods significantly affect recall and precision  
+- Threshold tuning is a powerful lever for classification behavior  
+- LightGBM outperforms deep models on tabular data  
+- AUC, precision, and recall are more informative than accuracy in imbalanced settings  
 
-## Project Structure
-default_prediction_project/
+---
+
+##  Production Readiness
+
+| Model | Pros                      | Cons                  | Suitability       |
+|-------|---------------------------|------------------------|-------------------|
+| M1    | Balanced recall/precision | Small dataset          | Prototype         |
+| M2    | Full data usage           | Low precision          | Needs tuning      |
+| M3    | Generalization via K-Fold | Low precision          | Experimental      |
+| M4    | High precision & recall   | Complex pipeline       | Production-ready  |
+| M5    | Strong deep model         | Slightly lower AUC     | Production-ready  |
+
+---
+
+##  Project Structure
+
+```
+default_risk_prediction/
 ├── final_version_default_prediction/
 │   ├── models/
 │   ├── notebooks/
@@ -131,37 +146,43 @@ default_prediction_project/
 │   ├── default_prediction_exploratory_v3.ipynb
 │   ├── default_prediction_exploratory_v3.py
 │   └── README.md
-└── README.md  
+└── README.md
+```
 
-Diference between final_version_default_prediction.ipynb and default_prediction_exploratory_pre_final_models.ipynb
+---
 
-Key Differences: Exploratory vs Final Project
-| Aspect | Course Project (default_prediction_exploratory_pre_final_models.ipynb) | Final Project (final_version_default_prediction.ipynb) | 
-| Data Cleaning | Dropped all rows with missing values | Likely used smarter imputation or selective column removal | 
-| Balancing Strategy | Tested undersampling, class weights, SMOTE | Finalized on SMOTE and class weights based on performance | 
-| Model Variety | 5 models: MLPs, PCA, LightGBM, SMOTE | Selected best-performing models for saving and deployment | 
-| Threshold Tuning | Explicit threshold optimization (e.g., 0.3, 0.42) | Final models likely use tuned thresholds or default 0.5 | 
-| Evaluation Depth | Extensive metric tracking (precision, recall, AUC, F1) | Final report summarizes metrics and recommends best model | 
-| Cross-Validation | Used Stratified K-Fold in Model 3 | Final version may rely on holdout or best fold strategy | 
-| Feature Engineering | One-hot encoding, PCA, scaling | Final version includes saved scalers and PCA for reuse | 
-| Model Saving | No model saving in this version | Final version saves .keras, .pkl, and .pca artifacts | 
-| Production Readiness | Mostly experimental and educational | Final version is structured for deployment and reuse | 
-| Documentation | Embedded in notebook comments and markdown | Final version includes structured README with usage instructions | 
+##  Key Differences: Exploratory vs Final Version
 
-Strategic Evolution
+| Aspect             | Exploratory Project                            | Final Project                                  |
+|--------------------|------------------------------------------------|------------------------------------------------|
+| Data Cleaning      | Dropped all nulls                              | Selective imputation or column removal         |
+| Balancing Strategy | Tested multiple methods                        | Finalized on SMOTE + class weights             |
+| Model Variety      | 5 models with varied strategies                | Selected best-performing models                |
+| Threshold Tuning   | Explicit tuning (e.g., 0.3, 0.42)              | Final models use tuned or default thresholds   |
+| Evaluation Depth   | Extensive metric tracking                      | Summarized metrics for deployment              |
+| Cross-Validation   | Stratified K-Fold (Model 3)                    | Holdout or best fold strategy                  |
+| Feature Engineering| One-hot, PCA, scaling                          | Saved scalers and PCA for reuse                |
+| Model Saving       | No saving                                      | Saved `.keras`, `.pkl`, `.pca` artifacts       |
+| Documentation      | Markdown and comments in notebook              | Structured README with usage instructions      |
 
-What I Refined in the Final Version:
-- Cleaner pipeline: Removed exploratory clutter, focused on reproducibility.
-- Artifact saving: Models, scalers, PCA saved for future use.
-- Modular structure: Clear separation of training, evaluation, and deployment logic.
-- Client-ready documentation: README with model usage, metrics, and structure.
-- Performance focus: Chose best model based on business-relevant metrics (e.g., recall for risk detection).
+---
 
-Summary
-The course project was my sandbox — where I tested ideas, architectures, and preprocessing strategies.
-The final version is my polished deliverable — optimized, reproducible, and ready for stakeholders or deployment.
+##  Strategic Evolution
 
-Contact
-Author: Carllos Watts-Nogueira
-Email: [carlloswattsnogueira@gmail.com]
-LinkedIn: [https://www.linkedin.com/in/carlloswattsnogueira/]
+**Refinements in Final Version:**
+
+- Cleaner pipeline with reproducible logic  
+- Saved artifacts for deployment  
+- Modular structure separating training and evaluation  
+- Business-focused metrics for model selection  
+- Client-ready documentation  
+
+---
+
+##  Contact
+
+**Author:** Carllos Watts-Nogueira  
+**Email:** [carlloswattsnogueira@gmail.com](mailto:carlloswattsnogueira@gmail.com)  
+**LinkedIn:** [linkedin.com/in/carlloswattsnogueira](https://www.linkedin.com/in/carlloswattsnogueira/)
+
+---

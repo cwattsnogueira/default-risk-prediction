@@ -13,16 +13,27 @@ The project is organized into four main phases:
 Project Structure
 
 default-risk-prediction/
+
 ├── final_version_default_prediction/
+
 │   ├── models/
+
 │   ├── notebooks/
+
 │   ├── data/
+
 │   ├── README.md
+
 │   └── requirements.txt
+
 ├── default_prediction_exploratory_pre_final/
+
 ├── default_prediction_exploratory_v2/
+
 ├── default_prediction_exploratory_v3/
+
 └── README.md
+
 
 Each subfolder contains its own notebook, scripts, and documentation.
 
@@ -63,22 +74,26 @@ Phase Summaries
 4. Final Version
 - Goal: Deliver a clean, deployable solution.
 - Saved Models: 
-| Model | Strategy | File | 
-|-------|----------|------| 
-| model_1 | Undersampling + NN | model_1_undersampling_nn.keras | 
-| model_2 | Class Weights + MLP | model_2_class_weights_mlp.keras | 
-| model_3 | PCA + K-Fold NN | model_3_pca_kfold_nn.keras | 
-| model_4 | LightGBM | model_4_lightgbm.pkl | 
-| model_5 | SMOTE + NN | model_5_smote_nn.keras |
+---
+
+| Model   | Strategy               | File                             |
+|---------|------------------------|----------------------------------|
+| model_1 | Undersampling + NN     | `model_1_undersampling_nn.keras` |
+| model_2 | Class Weights + MLP    | `model_2_class_weights_mlp.keras` |
+| model_3 | PCA + K-Fold NN        | `model_3_pca_kfold_nn.keras`     |
+| model_4 | LightGBM               | `model_4_lightgbm.pkl`           |
+| model_5 | SMOTE + NN             | `model_5_smote_nn.keras`         |
+
+---
 
 - Performance Summary: 
-| Model | AUC | F1 | Precision | Recall | Accuracy | 
-|-------|-----|----|-----------|--------|----------| 
-| M1 | 0.78 | 0.65 | 0.68 | 0.62 | 0.74 | 
-| M2 | 0.81 | 0.69 | 0.72 | 0.66 | 0.76 | 
-| M3 | 0.83 | 0.71 | 0.74 | 0.68 | 0.78 | 
-| M4 | 0.86 | 0.75 | 0.78 | 0.72 | 0.81 | 
-| M5 | 0.80 | 0.68 | 0.70 | 0.66 | 0.75 |
+| Model | AUC  | F1   | Precision | Recall | Accuracy |
+|-------|------|------|-----------|--------|----------|
+| M1    | 0.78 | 0.65 | 0.68      | 0.62   | 0.74     |
+| M2    | 0.81 | 0.69 | 0.72      | 0.66   | 0.76     |
+| M3    | 0.83 | 0.71 | 0.74      | 0.68   | 0.78     |
+| M4    | 0.86 | 0.75 | 0.78      | 0.72   | 0.81     |
+| M5    | 0.80 | 0.68 | 0.70      | 0.66   | 0.75     |
 
 - Recommendation:
 - Use model_4_lightgbm.pkl for best performance.
@@ -111,22 +126,26 @@ Lessons Learned
 
 Production Readiness
 
-| Model | Suitability | 
-| M1 | Prototype | 
-| M2 | Needs tuning | 
-| M3 | Experimental | 
-| M4 | Production-ready | 
-| M5 | Production-ready | 
+| Model | Suitability      |
+|-------|------------------|
+| M1    | Prototype        |
+| M2    | Needs tuning     |
+| M3    | Experimental     |
+| M4    | Production-ready |
+| M5    | Production-ready |
+
 
 
 All models are saved with corresponding scalers and PCA (if applicable), making them easy to deploy in APIs or dashboards.
 
-Contact
-Author: Carllos Watts-Nogueira
-Email: [carlloswattsnogueira@gmail.com]
-LinkedIn: [https://www.linkedin.com/in/carlloswattsnogueira/]
+---
 
+## Contact
 
+**Author:** Carllos Watts-Nogueira  
+**Email:** [carlloswattsnogueira@gmail.com](mailto:carlloswattsnogueira@gmail.com)  
+**LinkedIn:** [linkedin.com/in/carlloswattsnogueira](https://www.linkedin.com/in/carlloswattsnogueira/)
 
+---
 
 

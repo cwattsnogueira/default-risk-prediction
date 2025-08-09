@@ -86,7 +86,8 @@ Phase Summaries
 
 ---
 
-- Performance Summary: 
+- Performance Summary:
+
 | Model | AUC  | F1   | Precision | Recall | Accuracy |
 |-------|------|------|-----------|--------|----------|
 | M1    | 0.78 | 0.65 | 0.68      | 0.62   | 0.74     |

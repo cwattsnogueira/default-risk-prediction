@@ -1,16 +1,53 @@
-Default Prediction Project — Final README
+# Default Prediction Project
 
-Overview
+**Submission Date:** May 2025  
+**Author:** Carllos Watts-Nogueira  
+**Course:** Artificial Intelligence & Machine Learning  
+**Institution:** University of San Diego / Fullstack Academy  
+**Section:** 2504-FTB-CT-AIM-PT  
 
-This project aims to predict customer loan default risk using a combination of deep learning and ensemble methods. It evolved through multiple exploratory stages, culminating in a production-ready pipeline that integrates best practices in data preprocessing, model training, evaluation, and artifact saving.
+---
 
-The project is organized into four main phases:
-- Exploratory V2 — Baseline deep learning pipeline with strategic cleaning and undersampling.
-- Exploratory V3 — Enhanced version with PCA, cross-validation, and model saving.
-- Pre-Final — Course project with five modeling strategies and extensive evaluation.
-- Final Version — Consolidated and optimized models ready for deployment.
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)  
+![License](https://img.shields.io/badge/License-MIT-green.svg)  
+![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen.svg)  
+![Model](https://img.shields.io/badge/Best%20Model-LightGBM%20(AUC%3D0.86)-success.svg)  
+![Pipeline](https://img.shields.io/badge/Pipeline-4%20Phases-yellow.svg)  
+![Evaluation](https://img.shields.io/badge/Evaluation-AUC%2C%20F1%2C%20Recall%2C%20Precision-orange.svg)  
+![Artifacts](https://img.shields.io/badge/Artifacts-Saved%20Models%20%26%20Scalers-lightgrey.svg)
 
-Project Structure
+---
+
+## Overview
+
+This project predicts customer loan default risk using deep learning and ensemble methods. It evolved through four structured phases, culminating in a production-ready pipeline that integrates best practices in preprocessing, modeling, evaluation, and artifact saving.
+
+### Project Phases
+
+1. **Exploratory V2**  
+   - Baseline deep learning pipeline  
+   - Strategic imputation, undersampling, one-hot encoding  
+   - Neural network: 64 → Dropout → 32 → Sigmoid  
+   - Metrics: Accuracy 0.68, Recall 0.67, AUC 0.74  
+
+2. **Exploratory V3**  
+   - PCA (140–200 components), Stratified K-Fold  
+   - Architecture: 128 → Dropout → 64 → 32 → Sigmoid  
+   - ROC curve visualization  
+   - Saved artifacts: scaler, PCA, model  
+
+3. **Pre-Final (Course Project)**  
+   - Five modeling strategies: MLP, PCA, SMOTE, LightGBM  
+   - Key insight: LightGBM outperforms deep models on tabular data  
+   - Best model: LightGBM + SMOTE (AUC 0.992, F1 0.971)  
+
+4. **Final Version**  
+   - Consolidated models ready for deployment  
+   - Saved models and scalers for API/dashboard integration  
+
+---
+
+## Project Structure
 
 ```
 default_prediction_project/
@@ -26,47 +63,9 @@ default_prediction_project/
 └── README.md
 ```
 
-
-Each subfolder contains its own notebook, scripts, and documentation.
-
-Phase Summaries
-
-1. Exploratory V2
-- Goal: Build a clean, reproducible deep learning pipeline.
-- Highlights:
-- Strategic imputation based on missingness severity.
-- Undersampling to balance classes.
-- One-hot encoding and scaling.
-- Simple neural network: 64 → Dropout → 32 → Sigmoid.
-- Evaluation: Accuracy (0.68), Recall (0.67), AUC (0.74).
-- Limitations: No dimensionality reduction, cross-validation, or model saving.
-
-2. Exploratory V3
-- Goal: Improve generalization and modularity.
-- Enhancements:
-- PCA applied (tested 140, 180, 200 components).
-- Stratified K-Fold validation (5 folds).
-- Deeper architecture: 128 → Dropout → 64 → 32 → Sigmoid.
-- ROC curve visualization added.
-- Saved artifacts: scaler.pkl, pca_180.pkl, model_final_180.keras.
-- Best PCA config: 180 components yielded highest recall and AUC.
-
-3. Pre-Final (Course Project)
-- Goal: Explore multiple modeling strategies.
-- Models:
-- MLP with undersampling, class weights, SMOTE.
-- PCA + K-Fold + Class Weights.
-- LightGBM with SMOTE and threshold tuning.
-- Key Learnings:
-- Data quality > quantity.
-- Threshold tuning significantly affects performance.
-- LightGBM outperformed deep models on tabular data.
-- Best Model: Model 4 (LightGBM + SMOTE) with AUC 0.992, F1 0.971.
-
-4. Final Version
-- Goal: Deliver a clean, deployable solution.
-- Saved Models: 
 ---
+
+## Final Models
 
 | Model   | Strategy               | File                             |
 |---------|------------------------|----------------------------------|
@@ -78,7 +77,7 @@ Phase Summaries
 
 ---
 
-- Performance Summary:
+## Performance Summary
 
 | Model | AUC  | F1   | Precision | Recall | Accuracy |
 |-------|------|------|-----------|--------|----------|
@@ -88,36 +87,51 @@ Phase Summaries
 | M4    | 0.86 | 0.75 | 0.78      | 0.72   | 0.81     |
 | M5    | 0.80 | 0.68 | 0.70      | 0.66   | 0.75     |
 
-- Recommendation:
-- Use model_4_lightgbm.pkl for best performance.
-- Use model_3_pca_kfold_nn.keras if dimensionality reduction is required.
+**Recommendation:**  
+- Use `model_4_lightgbm.pkl` for best performance.  
+- Use `model_3_pca_kfold_nn.keras` if dimensionality reduction is required.
 
-How to Use the Saved Models
+---
 
-1. Load Scaler
+## How to Use the Saved Models
+
+**1. Load Scaler**
+```python
 import pickle
 with open('models/scaler_model1.pkl', 'rb') as f:
     scaler = pickle.load(f)
 X_new_scaled = scaler.transform(X_new)
+```
 
-
-2. Load Model
+**2. Load Model**
+```python
 from keras.models import load_model
 model = load_model('models/model_1_undersampling_nn.keras')
 y_pred = model.predict(X_new_scaled)
+```
 
-Requirements
+---
+
+## Requirements
+
 Install dependencies:
+```bash
 pip install -r requirements.txt
+```
 
-Lessons Learned
-- Strategic imputation and flag creation improve model interpretability.
-- PCA enhances generalization and reduces overfitting.
-- Cross-validation is essential for robust performance estimation.
-- Threshold tuning can dramatically shift model behavior.
-- LightGBM excels on tabular data, but neural nets offer flexibility.
+---
 
-Production Readiness
+## Lessons Learned
+
+- Strategic imputation and flag creation improve interpretability  
+- PCA enhances generalization and reduces overfitting  
+- Cross-validation is essential for robust performance  
+- Threshold tuning can dramatically shift model behavior  
+- LightGBM excels on tabular data; neural nets offer flexibility  
+
+---
+
+## Production Readiness
 
 | Model | Suitability      |
 |-------|------------------|
@@ -127,9 +141,13 @@ Production Readiness
 | M4    | Production-ready |
 | M5    | Production-ready |
 
+All models are saved with corresponding scalers and PCA (if applicable), ready for deployment in APIs or dashboards.
 
+---
 
-All models are saved with corresponding scalers and PCA (if applicable), making them easy to deploy in APIs or dashboards.
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
 
 ---
 
@@ -140,6 +158,4 @@ All models are saved with corresponding scalers and PCA (if applicable), making 
 **LinkedIn:** [linkedin.com/in/carlloswattsnogueira](https://www.linkedin.com/in/carlloswattsnogueira/)
 
 ---
-
-
 

@@ -12,27 +12,19 @@ The project is organized into four main phases:
 
 Project Structure
 
-default-risk-prediction/
-
+```
+default_prediction_project/
 ├── final_version_default_prediction/
-
 │   ├── models/
-
 │   ├── notebooks/
-
 │   ├── data/
-
 │   ├── README.md
-
 │   └── requirements.txt
-
 ├── default_prediction_exploratory_pre_final/
-
 ├── default_prediction_exploratory_v2/
-
 ├── default_prediction_exploratory_v3/
-
 └── README.md
+```
 
 
 Each subfolder contains its own notebook, scripts, and documentation.
@@ -148,5 +140,6 @@ All models are saved with corresponding scalers and PCA (if applicable), making 
 **LinkedIn:** [linkedin.com/in/carlloswattsnogueira](https://www.linkedin.com/in/carlloswattsnogueira/)
 
 ---
+
 
 

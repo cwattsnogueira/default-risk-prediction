@@ -50,7 +50,7 @@ This project predicts customer loan default risk using deep learning and ensembl
 ## Project Structure
 
 ```
-default_prediction_project/
+default-risk-prediction/
 ├── final_version_default_prediction/
 │   ├── models/
 │   ├── notebooks/
@@ -58,8 +58,17 @@ default_prediction_project/
 │   ├── README.md
 │   └── requirements.txt
 ├── default_prediction_exploratory_pre_final/
+│   ├── default_prediction_exploratory_pre_final_models.ipynb
+│   ├── default_prediction_exploratory_pre_final_models.py
+│   └── README.md
 ├── default_prediction_exploratory_v2/
+│   ├── default_prediction_exploratory_v2.ipynb
+│   ├── default_prediction_exploratory_v2.py
+│   └── README.md
 ├── default_prediction_exploratory_v3/
+│   ├── default_prediction_exploratory_v3.ipynb
+│   ├── default_prediction_exploratory_v3.py
+│   └── README.md
 └── README.md
 ```
 

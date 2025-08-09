@@ -12,7 +12,7 @@ The project is organized into four main phases:
 
 Project Structure
 
-default_prediction_project/
+default-risk-prediction/
 ├── final_version_default_prediction/
 │   ├── models/
 │   ├── notebooks/

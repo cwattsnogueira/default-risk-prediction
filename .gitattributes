@@ -1,2 +1,12 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Exclude notebooks from language stats
+*.ipynb linguist-vendored
+
+# Disable diffs for notebooks
+*.ipynb -diff
+
+# Treat data files as binary
+*.csv binary
+*.pkl binary
